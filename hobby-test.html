@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>習い事さがし！あなたにぴったりの習い事テスト</title>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&family=M+PLUS+Rounded+1c:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sky: #4FC3F7;
+    --sunny: #FFD54F;
+    --grass: #81C784;
+    --coral: #FF8A65;
+    --lavender: #CE93D8;
+    --mint: #80CBC4;
+    --pink: #F48FB1;
+    --navy: #1A237E;
+    --bg: #FFF8E1;
+    --card-shadow: 0 6px 20px rgba(0,0,0,0.10);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Zen Maru Gothic', sans-serif;
+    background: var(--bg);
+    min-height: 100vh;
+    color: #333;
+    overflow-x: hidden;
+  }
+
+  /* ===== HEADER ===== */
+  header {
+    background: linear-gradient(135deg, #FF6B6B 0%, #FFD93D 40%, #6BCB77 70%, #4D96FF 100%);
+    text-align: center;
+    padding: 40px 20px 30px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '🌟✨🎯🌈⚡🎪🎨🎵🏆🌸';
+    position: absolute; top: 5px; left: 0; right: 0;
+    font-size: 22px; letter-spacing: 8px;
+    opacity: 0.4;
+  }
+  header h1 {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-weight: 900;
+    font-size: clamp(22px, 5vw, 42px);
+    color: white;
+    text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+    line-height: 1.3;
+  }
+  header p {
+    color: white;
+    margin-top: 10px;
+    font-size: 15px;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.2);
+  }
+
+  /* ===== SECTION WRAPPER ===== */
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* ===== 100 HOBBIES ===== */
+  #sec-list { padding: 30px 16px 20px; max-width: 900px; margin: 0 auto; }
+  #sec-list h2 {
+    font-size: 22px;
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 6px;
+    color: var(--navy);
+  }
+  #sec-list .sub {
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+  .category {
+    margin-bottom: 26px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+  }
+  .cat-header {
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 900;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .hobby-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+    padding: 16px;
+  }
+  .hobby-chip {
+    background: #f5f5f5;
+    border-radius: 12px;
+    padding: 8px 10px;
+    font-size: 13px;
+    text-align: center;
+    border: 2px solid transparent;
+    cursor: default;
+    transition: transform 0.2s;
+    line-height: 1.4;
+  }
+  .hobby-chip:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  .start-btn-wrap {
+    text-align: center;
+    margin: 30px 0 10px;
+  }
+  .big-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #FF6B6B, #FFD93D);
+    color: white;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-weight: 900;
+    font-size: 20px;
+    padding: 18px 50px;
+    border-radius: 60px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(255,107,107,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.1);
+  }
+  .big-btn:hover {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 10px 30px rgba(255,107,107,0.5);
+  }
+
+  /* ===== QUIZ ===== */
+  #sec-quiz { padding: 30px 16px; max-width: 680px; margin: 0 auto; }
+  .progress-bar-wrap {
+    background: #ddd;
+    border-radius: 99px;
+    height: 10px;
+    margin-bottom: 28px;
+    overflow: hidden;
+  }
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCB77);
+    border-radius: 99px;
+    transition: width 0.5s ease;
+  }
+  .question-card {
+    background: white;
+    border-radius: 24px;
+    box-shadow: var(--card-shadow);
+    padding: 30px 24px;
+  }
+  .q-num {
+    font-size: 13px;
+    color: #999;
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+  .q-text {
+    font-size: clamp(16px, 3vw, 20px);
+    font-weight: 900;
+    color: var(--navy);
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .opt-btn {
+    background: #f8f8f8;
+    border: 2px solid #e0e0e0;
+    border-radius: 16px;
+    padding: 16px 20px;
+    text-align: left;
+    font-family: 'Zen Maru Gothic', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .opt-btn:hover {
+    border-color: #FF6B6B;
+    background: #fff0f0;
+    transform: translateX(4px);
+  }
+  .opt-btn.selected {
+    border-color: #FF6B6B;
+    background: linear-gradient(135deg, #fff0f0, #fff8e1);
+    color: #c62828;
+  }
+  .opt-icon { font-size: 22px; flex-shrink: 0; }
+  .nav-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 24px;
+  }
+  .nav-btn {
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    padding: 10px 24px;
+    font-family: 'Zen Maru Gothic', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+  }
+  .nav-btn:hover { border-color: #aaa; background: #f5f5f5; }
+  .nav-btn.primary {
+    background: linear-gradient(135deg, #6BCB77, #4D96FF);
+    border-color: transparent;
+    color: white;
+  }
+  .nav-btn.primary:hover { opacity: 0.85; }
+  .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  /* ===== RESULT ===== */
+  #sec-result { padding: 30px 16px 50px; max-width: 720px; margin: 0 auto; }
+  .result-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .result-header h2 {
+    font-size: clamp(22px, 5vw, 36px);
+    font-weight: 900;
+    color: var(--navy);
+    line-height: 1.3;
+  }
+  .result-header p { color: #666; margin-top: 8px; }
+  .result-card {
+    background: white;
+    border-radius: 24px;
+    box-shadow: var(--card-shadow);
+    padding: 24px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s;
+  }
+  .result-card:hover { transform: translateY(-3px); }
+  .result-card::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 6px;
+  }
+  .rank-badge {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-weight: 900;
+    font-size: 22px;
+    flex-shrink: 0;
+    color: white;
+  }
+  .result-info { flex: 1; }
+  .result-hobby {
+    font-size: clamp(18px, 3vw, 22px);
+    font-weight: 900;
+    color: #222;
+  }
+  .result-reason {
+    font-size: 13px;
+    color: #777;
+    margin-top: 4px;
+    line-height: 1.6;
+  }
+  .result-emoji { font-size: 40px; }
+  .retry-wrap {
+    text-align: center;
+    margin-top: 30px;
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .back-list-btn {
+    background: white;
+    border: 2px solid var(--navy);
+    color: var(--navy);
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 14px 30px;
+    border-radius: 60px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .back-list-btn:hover { background: var(--navy); color: white; }
+
+  /* top 1 特別 */
+  .result-card:nth-child(1) { background: linear-gradient(135deg, #fff9c4, #fff); }
+  .result-card:nth-child(1) .rank-badge { background: linear-gradient(135deg, #FFD700, #FFA000); }
+  .result-card:nth-child(1)::before { background: #FFD700; }
+  .result-card:nth-child(2) .rank-badge { background: linear-gradient(135deg, #90A4AE, #607D8B); }
+  .result-card:nth-child(2)::before { background: #90A4AE; }
+  .result-card:nth-child(3) .rank-badge { background: linear-gradient(135deg, #FF8A65, #F4511E); }
+  .result-card:nth-child(3)::before { background: #FF8A65; }
+  .result-card:nth-child(4) .rank-badge { background: linear-gradient(135deg, #81C784, #388E3C); }
+  .result-card:nth-child(4)::before { background: #81C784; }
+  .result-card:nth-child(5) .rank-badge { background: linear-gradient(135deg, #CE93D8, #8E24AA); }
+  .result-card:nth-child(5)::before { background: #CE93D8; }
+
+  @keyframes pop { 0%{opacity:0;transform:scale(0.8) translateY(20px)} 100%{opacity:1;transform:scale(1) translateY(0)} }
+  .result-card { animation: pop 0.4s ease forwards; }
+  .result-card:nth-child(1) { animation-delay: 0.05s; opacity:0; }
+  .result-card:nth-child(2) { animation-delay: 0.15s; opacity:0; }
+  .result-card:nth-child(3) { animation-delay: 0.25s; opacity:0; }
+  .result-card:nth-child(4) { animation-delay: 0.35s; opacity:0; }
+  .result-card:nth-child(5) { animation-delay: 0.45s; opacity:0; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🌟 習い事さがし！<br>あなたにぴったりの習い事テスト 🌟</h1>
+  <p>100この習い事から、あなたにぴったりのTop5を見つけよう！</p>
+</header>
+
+<!-- ===== セクション1: 100この習い事リスト ===== -->
+<div id="sec-list" class="section active">
+  <h2>📋 100この習い事リスト</h2>
+  <p class="sub">まずは全部見てみよう！気になるものはあるかな？</p>
+  <div id="hobby-list-container"></div>
+  <div class="start-btn-wrap">
+    <button class="big-btn" onclick="goToQuiz()">
+      🎯 テストをスタートする！
+    </button>
+  </div>
+</div>
+
+<!-- ===== セクション2: クイズ ===== -->
+<div id="sec-quiz" class="section">
+  <div class="progress-bar-wrap">
+    <div class="progress-bar" id="progress-bar" style="width:0%"></div>
+  </div>
+  <div class="question-card">
+    <div class="q-num" id="q-num">問題 1 / 5</div>
+    <div class="q-text" id="q-text"></div>
+    <div class="options" id="q-options"></div>
+    <div class="nav-row">
+      <button class="nav-btn" id="prev-btn" onclick="prevQ()" disabled>← もどる</button>
+      <button class="nav-btn primary" id="next-btn" onclick="nextQ()">つぎへ →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== セクション3: 結果 ===== -->
+<div id="sec-result" class="section">
+  <div class="result-header">
+    <h2>🎉 あなたにぴったりの<br>習い事Top5！</h2>
+    <p>答えをもとに、あなたに合いそうな習い事をえらびました！</p>
+  </div>
+  <div id="result-list"></div>
+  <div class="retry-wrap">
+    <button class="back-list-btn" onclick="goToList()">📋 リストにもどる</button>
+    <button class="big-btn" onclick="restartQuiz()">🔄 もう一度テストする</button>
+  </div>
+</div>
+
+<script>
+/* ====================================
+   データ定義
+==================================== */
+const categories = [
+  {
+    name: "⚽ スポーツ（チーム）",
+    color: "#4CAF50",
+    hobbies: [
+      "サッカー", "バスケットボール", "バレーボール",
+      "野球", "ソフトボール", "ハンドボール",
+      "ラグビー", "アイスホッケー", "ドッジボール",
+      "アメリカンフットボール", "ラクロス", "水球"
+    ]
+  },
+  {
+    name: "🏃 スポーツ（一人・少人数）",
+    color: "#FF7043",
+    hobbies: [
+      "水泳", "体そう", "テニス",
+      "卓球", "バドミントン", "陸上",
+      "柔道", "空手", "剣道",
+      "合気道", "レスリング", "ボルダリング",
+      "フィギュアスケート", "スキー・スノーボード", "馬術"
+    ]
+  },
+  {
+    name: "🎵 音楽",
+    color: "#9C27B0",
+    hobbies: [
+      "ピアノ", "バイオリン", "ギター",
+      "ドラム", "フルート", "トランペット",
+      "チェロ", "ウクレレ", "声楽（うた）",
+      "合唱", "和太鼓", "三味線（しゃみせん）",
+      "尺八（しゃくはち）"
+    ]
+  },
+  {
+    name: "💃 ダンス・演技",
+    color: "#E91E63",
+    hobbies: [
+      "バレエ", "ヒップホップダンス", "日本舞踊（ぶよう）",
+      "フラダンス", "社交ダンス", "チアダンス",
+      "演劇・ミュージカル", "落語（らくご）", "よさこいソーラン"
+    ]
+  },
+  {
+    name: "🎨 アート・ものづくり",
+    color: "#FF9800",
+    hobbies: [
+      "絵画（油絵・水彩など）", "書道", "陶芸（とうげい）",
+      "工作・木工", "手芸・ぬいぐるみ作り", "折り紙・切り紙",
+      "マンガ・イラスト", "写真", "プログラミング",
+      "ロボット作り"
+    ]
+  },
+  {
+    name: "📚 学習・スキル",
+    color: "#2196F3",
+    hobbies: [
+      "英語（英会話）", "学習塾", "そろばん",
+      "習字（書き方）", "速読（そくどく）", "プログラミング（学習）",
+      "将棋（しょうぎ）", "囲碁（いご）", "チェス"
+    ]
+  },
+  {
+    name: "🌿 自然・アウトドア",
+    color: "#4CAF50",
+    hobbies: [
+      "ガーデニング・植物そだて", "料理・お菓子作り", "釣り",
+      "キャンプ・サバイバル", "登山・ハイキング", "野鳥観察",
+      "天体（星）観察", "農業体験"
+    ]
+  },
+  {
+    name: "🧘 こころとからだ",
+    color: "#00BCD4",
+    hobbies: [
+      "ヨガ", "座禅（ざぜん）", "マインドフルネス",
+      "囲碁（いご）", "詩（し）・俳句（はいく）作り", "日記・作文",
+      "読書クラブ"
+    ]
+  },
+  {
+    name: "🎭 文化・伝統",
+    color: "#795548",
+    hobbies: [
+      "茶道（さどう）", "花道（はなみち）・生け花", "能・狂言（のう・きょうげん）",
+      "着物着付け（きつけ）", "華道（かどう）", "香道（こうどう）"
+    ]
+  },
+  {
+    name: "🚀 先進・ユニーク",
+    color: "#607D8B",
+    hobbies: [
+      "e-Sports（ゲーム大会）", "マジック・手品", "ジャグリング",
+      "お笑い・コント", "科学実験クラブ", "動画・映えづくり",
+      "ポッドキャスト・ラジオ"
+    ]
+  }
+];
+
+/* 全習い事を番号付きでフラットリストに変換 */
+let allHobbies = [];
+categories.forEach(cat => cat.hobbies.forEach(h => allHobbies.push({ name: h, cat: cat.name })));
+// 100個になるようにダミー補完（既に100近いが確認済み）
+
+/* ====================================
+   質問定義（5問）
+==================================== */
+const questions = [
+  {
+    text: "🤔 休みの日、何をしているときがいちばん楽しい？",
+    options: [
+      { icon: "🏃", label: "体を思い切り動かす", tags: ["スポーツ"] },
+      { icon: "🎨", label: "何かを作ったり絵をかいたりする", tags: ["アート"] },
+      { icon: "🎵", label: "音楽をきいたり歌ったりする", tags: ["音楽", "ダンス"] },
+      { icon: "📖", label: "本を読んだり考えたりする", tags: ["学習", "こころ"] },
+    ]
+  },
+  {
+    text: "💪 自分のどんなところをのばしたい？",
+    options: [
+      { icon: "🤸", label: "体力・運動", tags: ["スポーツ"] },
+      { icon: "🧠", label: "頭のよさ・知識", tags: ["学習", "こころ"] },
+      { icon: "✨", label: "センス・表げん力", tags: ["アート", "音楽", "ダンス"] },
+      { icon: "🌍", label: "コミュニケーション・英語", tags: ["学習"] },
+    ]
+  },
+  {
+    text: "👥 習い事はどんな雰囲気（ふんいき）が好き？",
+    options: [
+      { icon: "🏆", label: "チームで力を合わせる", tags: ["スポーツ（チーム）"] },
+      { icon: "🧍", label: "一人で集中してとりくむ", tags: ["学習", "こころ", "アート"] },
+      { icon: "🎭", label: "みんなの前で発表する", tags: ["音楽", "ダンス"] },
+      { icon: "🤝", label: "少人数でわきあいあい", tags: ["スポーツ（少人数）", "文化"] },
+    ]
+  },
+  {
+    text: "🌟 将来やってみたいことに近いのは？",
+    options: [
+      { icon: "🏅", label: "スポーツせん手・体を使う仕事", tags: ["スポーツ"] },
+      { icon: "🎤", label: "音楽家・ダンサー・芸術家", tags: ["音楽", "ダンス", "アート"] },
+      { icon: "💻", label: "プログラマー・研究者・医者", tags: ["学習", "先進"] },
+      { icon: "🍀", label: "まだよくわからない・なんでもやりたい", tags: ["アート", "自然", "文化"] },
+    ]
+  },
+  {
+    text: "🎯 習い事に対して大事なのは？",
+    options: [
+      { icon: "🔥", label: "しっかり試合・発表がある", tags: ["スポーツ", "音楽", "ダンス"] },
+      { icon: "📅", label: "自分のペースでできる", tags: ["アート", "こころ"] },
+      { icon: "🌱", label: "将来にも役立つスキル", tags: ["学習", "先進"] },
+      { icon: "🎉", label: "とにかく楽しい・友達ができる", tags: ["スポーツ（チーム）", "ダンス", "文化"] },
+    ]
+  }
+];
+
+/* ====================================
+   スコアリングマップ
+==================================== */
+const tagToCategory = {
+  "スポーツ": ["⚽ スポーツ（チーム）", "🏃 スポーツ（一人・少人数）"],
+  "スポーツ（チーム）": ["⚽ スポーツ（チーム）"],
+  "スポーツ（少人数）": ["🏃 スポーツ（一人・少人数）"],
+  "音楽": ["🎵 音楽"],
+  "ダンス": ["💃 ダンス・演技"],
+  "アート": ["🎨 アート・ものづくり"],
+  "学習": ["📚 学習・スキル"],
+  "こころ": ["🧘 こころとからだ"],
+  "自然": ["🌿 自然・アウトドア"],
+  "文化": ["🎭 文化・伝統"],
+  "先進": ["🚀 先進・ユニーク"],
+};
+
+/* ====================================
+   状態管理
+==================================== */
+let currentQ = 0;
+let answers = new Array(questions.length).fill(null);
+
+/* ====================================
+   DOM構築: 100リスト
+==================================== */
+function buildHobbyList() {
+  const container = document.getElementById('hobby-list-container');
+  let num = 1;
+  categories.forEach(cat => {
+    const div = document.createElement('div');
+    div.className = 'category';
+    div.innerHTML = `<div class="cat-header" style="background:${cat.color}">${cat.name}</div>
+      <div class="hobby-grid">${cat.hobbies.map(h => `<div class="hobby-chip" style="border-color:${cat.color}22">
+        <strong style="color:${cat.color};font-size:11px;">No.${num++}</strong><br>${h}
+      </div>`).join('')}</div>`;
+    container.appendChild(div);
+  });
+}
+
+/* ====================================
+   ナビゲーション
+==================================== */
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function goToQuiz() {
+  currentQ = 0;
+  answers = new Array(questions.length).fill(null);
+  renderQuestion();
+  showSection('sec-quiz');
+}
+
+function goToList() { showSection('sec-list'); }
+function restartQuiz() { goToQuiz(); }
+
+/* ====================================
+   クイズ描画
+==================================== */
+function renderQuestion() {
+  const q = questions[currentQ];
+  document.getElementById('q-num').textContent = `問題 ${currentQ + 1} / ${questions.length}`;
+  document.getElementById('q-text').textContent = q.text;
+  document.getElementById('progress-bar').style.width = `${(currentQ / questions.length) * 100}%`;
+
+  const opts = document.getElementById('q-options');
+  opts.innerHTML = q.options.map((o, i) => `
+    <button class="opt-btn ${answers[currentQ] === i ? 'selected' : ''}" onclick="selectAnswer(${i})">
+      <span class="opt-icon">${o.icon}</span>
+      <span>${o.label}</span>
+    </button>
+  `).join('');
+
+  document.getElementById('prev-btn').disabled = currentQ === 0;
+  const nextBtn = document.getElementById('next-btn');
+  if (currentQ === questions.length - 1) {
+    nextBtn.textContent = '結果を見る！🎉';
+    nextBtn.onclick = showResult;
+  } else {
+    nextBtn.textContent = 'つぎへ →';
+    nextBtn.onclick = nextQ;
+  }
+}
+
+function selectAnswer(i) {
+  answers[currentQ] = i;
+  renderQuestion();
+}
+
+function nextQ() {
+  if (answers[currentQ] === null) {
+    const btns = document.querySelectorAll('.opt-btn');
+    btns.forEach(b => { b.style.animation = 'none'; b.offsetHeight; b.style.animation = 'shake 0.3s'; });
+    return;
+  }
+  if (currentQ < questions.length - 1) { currentQ++; renderQuestion(); }
+}
+
+function prevQ() {
+  if (currentQ > 0) { currentQ--; renderQuestion(); }
+}
+
+/* ====================================
+   結果計算
+==================================== */
+function showResult() {
+  if (answers[currentQ] === null) return;
+
+  // スコアを集計
+  const catScore = {};
+  categories.forEach(cat => catScore[cat.name] = 0);
+
+  answers.forEach((ansIdx, qIdx) => {
+    if (ansIdx === null) return;
+    const tags = questions[qIdx].options[ansIdx].tags;
+    tags.forEach(tag => {
+      const cats = tagToCategory[tag] || [];
+      cats.forEach(c => { if (catScore[c] !== undefined) catScore[c] += 3; });
+      // 完全一致でなくても部分一致でスコア加算
+      categories.forEach(cat => {
+        if (cat.name.includes(tag) || tag.includes('スポーツ') && cat.name.includes('スポーツ')) {
+          catScore[cat.name] = (catScore[cat.name] || 0) + 1;
+        }
+      });
+    });
+  });
+
+  // スコアが高いカテゴリ順に習い事を5つ選出
+  const sortedCats = Object.entries(catScore).sort((a, b) => b[1] - a[1]);
+  const top5 = [];
+  const usedCats = new Set();
+  sortedCats.forEach(([catName, score]) => {
+    if (top5.length >= 5) return;
+    const cat = categories.find(c => c.name === catName);
+    if (!cat) return;
+    // そのカテゴリから1つ選ぶ（先頭）
+    const hobby = cat.hobbies[Math.floor(Math.random() * Math.min(3, cat.hobbies.length))];
+    top5.push({ hobby, catName, cat, score });
+  });
+
+  // 足りない場合は補完
+  if (top5.length < 5) {
+    categories.forEach(cat => {
+      if (top5.length >= 5) return;
+      if (top5.some(r => r.catName === cat.name)) return;
+      top5.push({ hobby: cat.hobbies[0], catName: cat.name, cat, score: 0 });
+    });
+  }
+
+  const reasons = [
+    "あなたの答えから、このジャンルがとても合いそうです！",
+    "あなたの好きなことと、この習い事はぴったりです！",
+    "あなたのめざす姿に近い習い事です！ぜひためしてみて！",
+    "楽しみながらつづけられそうな習い事です！",
+    "少し意外かもしれないけど、きっとはまるはず！"
+  ];
+
+  const rankEmojis = ["🥇", "🥈", "🥉", "4️⃣", "5️⃣"];
+
+  const list = document.getElementById('result-list');
+  list.innerHTML = top5.slice(0, 5).map((r, i) => `
+    <div class="result-card">
+      <div class="rank-badge">${rankEmojis[i]}</div>
+      <div class="result-info">
+        <div class="result-hobby">${r.hobby}</div>
+        <div style="font-size:12px;color:#aaa;margin-top:2px;">${r.catName}</div>
+        <div class="result-reason">${reasons[i]}</div>
+      </div>
+      <div class="result-emoji">${getEmoji(r.catName)}</div>
+    </div>
+  `).join('');
+
+  showSection('sec-result');
+}
+
+function getEmoji(catName) {
+  if (catName.includes('スポーツ（チーム）')) return '⚽';
+  if (catName.includes('スポーツ')) return '🏃';
+  if (catName.includes('音楽')) return '🎵';
+  if (catName.includes('ダンス')) return '💃';
+  if (catName.includes('アート')) return '🎨';
+  if (catName.includes('学習')) return '📚';
+  if (catName.includes('自然')) return '🌿';
+  if (catName.includes('こころ')) return '🧘';
+  if (catName.includes('文化')) return '🎭';
+  if (catName.includes('先進')) return '🚀';
+  return '⭐';
+}
+
+/* ====================================
+   初期化
+==================================== */
+buildHobbyList();
+</script>
+</body>
+</html>
