@@ -4,733 +4,596 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>習い事さがし！あなたにぴったりの習い事テスト</title>
-<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&family=M+PLUS+Rounded+1c:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --sky: #4FC3F7;
-    --sunny: #FFD54F;
-    --grass: #81C784;
-    --coral: #FF8A65;
-    --lavender: #CE93D8;
-    --mint: #80CBC4;
-    --pink: #F48FB1;
-    --navy: #1A237E;
-    --bg: #FFF8E1;
-    --card-shadow: 0 6px 20px rgba(0,0,0,0.10);
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Zen Maru Gothic', sans-serif;
-    background: var(--bg);
-    min-height: 100vh;
-    color: #333;
-    overflow-x: hidden;
-  }
+:root {
+  --bg: #FFF8F0;
+  --navy: #1A1A3E;
+  --card: #ffffff;
+  --shadow: 0 8px 32px rgba(0,0,0,0.08);
+  --radius: 24px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background: var(--bg);
+  color: #333;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
 
-  /* ===== HEADER ===== */
-  header {
-    background: linear-gradient(135deg, #FF6B6B 0%, #FFD93D 40%, #6BCB77 70%, #4D96FF 100%);
-    text-align: center;
-    padding: 40px 20px 30px;
-    position: relative;
-    overflow: hidden;
-  }
-  header::before {
-    content: '🌟✨🎯🌈⚡🎪🎨🎵🏆🌸';
-    position: absolute; top: 5px; left: 0; right: 0;
-    font-size: 22px; letter-spacing: 8px;
-    opacity: 0.4;
-  }
-  header h1 {
-    font-family: 'M PLUS Rounded 1c', sans-serif;
-    font-weight: 900;
-    font-size: clamp(22px, 5vw, 42px);
-    color: white;
-    text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
-    line-height: 1.3;
-  }
-  header p {
-    color: white;
-    margin-top: 10px;
-    font-size: 15px;
-    text-shadow: 1px 1px 0 rgba(0,0,0,0.2);
-  }
+/* ===== HEADER ===== */
+header {
+  background: linear-gradient(135deg, #FF6B6B 0%, #FFD93D 35%, #6BCB77 65%, #4D96FF 100%);
+  padding: 44px 20px 34px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+header::before {
+  content: '🌟✨🎯🌈⚡🎪🎨🎵🏆🌸';
+  position: absolute; top: 6px; left: 0; right: 0;
+  font-size: 20px; letter-spacing: 10px; opacity: 0.35;
+  pointer-events: none;
+}
+header h1 {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 900;
+  font-size: clamp(20px, 5vw, 40px);
+  color: #fff;
+  text-shadow: 3px 3px 0 rgba(0,0,0,0.18);
+  line-height: 1.35;
+}
+header p {
+  color: rgba(255,255,255,0.92);
+  margin-top: 10px;
+  font-size: 14px;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.15);
+}
 
-  /* ===== SECTION WRAPPER ===== */
-  .section { display: none; }
-  .section.active { display: block; }
+/* ===== SECTION ===== */
+.section { display: none; }
+.section.active { display: block; }
 
-  /* ===== 100 HOBBIES ===== */
-  #sec-list { padding: 30px 16px 20px; max-width: 900px; margin: 0 auto; }
-  #sec-list h2 {
-    font-size: 22px;
-    font-weight: 900;
-    text-align: center;
-    margin-bottom: 6px;
-    color: var(--navy);
-  }
-  #sec-list .sub {
-    text-align: center;
-    color: #666;
-    font-size: 14px;
-    margin-bottom: 24px;
-  }
-  .category {
-    margin-bottom: 26px;
-    background: white;
-    border-radius: 20px;
-    box-shadow: var(--card-shadow);
-    overflow: hidden;
-  }
-  .cat-header {
-    padding: 12px 20px;
-    font-size: 16px;
-    font-weight: 900;
-    color: white;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .hobby-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 10px;
-    padding: 16px;
-  }
-  .hobby-chip {
-    background: #f5f5f5;
-    border-radius: 12px;
-    padding: 8px 10px;
-    font-size: 13px;
-    text-align: center;
-    border: 2px solid transparent;
-    cursor: default;
-    transition: transform 0.2s;
-    line-height: 1.4;
-  }
-  .hobby-chip:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  }
-  .start-btn-wrap {
-    text-align: center;
-    margin: 30px 0 10px;
-  }
-  .big-btn {
-    display: inline-block;
-    background: linear-gradient(135deg, #FF6B6B, #FFD93D);
-    color: white;
-    font-family: 'M PLUS Rounded 1c', sans-serif;
-    font-weight: 900;
-    font-size: 20px;
-    padding: 18px 50px;
-    border-radius: 60px;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 6px 20px rgba(255,107,107,0.4);
-    transition: transform 0.2s, box-shadow 0.2s;
-    text-shadow: 1px 1px 0 rgba(0,0,0,0.1);
-  }
-  .big-btn:hover {
-    transform: translateY(-3px) scale(1.04);
-    box-shadow: 0 10px 30px rgba(255,107,107,0.5);
-  }
+/* ===== LIST ===== */
+#sec-list { padding: 28px 16px 16px; max-width: 980px; margin: 0 auto; }
+#sec-list h2 { font-size: 21px; font-weight: 900; text-align: center; color: var(--navy); margin-bottom: 4px; }
+.sub { text-align: center; color: #888; font-size: 13px; margin-bottom: 22px; }
+.category { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 20px; overflow: hidden; }
+.cat-header { padding: 11px 20px; font-size: 15px; font-weight: 900; color: #fff; display: flex; align-items: center; gap: 8px; }
+.hobby-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); gap: 8px; padding: 14px; }
+.hobby-chip {
+  background: #f7f7f7; border-radius: 12px; padding: 8px 10px;
+  font-size: 12.5px; text-align: center; border: 2px solid transparent;
+  line-height: 1.45; transition: transform .2s, box-shadow .2s;
+}
+.hobby-chip:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+.start-btn-wrap { text-align: center; margin: 28px 0 8px; }
+.big-btn {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 900; font-size: 19px;
+  background: linear-gradient(135deg, #FF6B6B, #FFD93D);
+  color: #fff; border: none; border-radius: 60px;
+  padding: 17px 50px; cursor: pointer;
+  box-shadow: 0 6px 24px rgba(255,107,107,0.38);
+  transition: transform .2s, box-shadow .2s;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.1);
+}
+.big-btn:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 10px 32px rgba(255,107,107,0.5); }
 
-  /* ===== QUIZ ===== */
-  #sec-quiz { padding: 30px 16px; max-width: 680px; margin: 0 auto; }
-  .progress-bar-wrap {
-    background: #ddd;
-    border-radius: 99px;
-    height: 10px;
-    margin-bottom: 28px;
-    overflow: hidden;
-  }
-  .progress-bar {
-    height: 100%;
-    background: linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCB77);
-    border-radius: 99px;
-    transition: width 0.5s ease;
-  }
-  .question-card {
-    background: white;
-    border-radius: 24px;
-    box-shadow: var(--card-shadow);
-    padding: 30px 24px;
-  }
-  .q-num {
-    font-size: 13px;
-    color: #999;
-    margin-bottom: 8px;
-    font-weight: 700;
-  }
-  .q-text {
-    font-size: clamp(16px, 3vw, 20px);
-    font-weight: 900;
-    color: var(--navy);
-    margin-bottom: 24px;
-    line-height: 1.6;
-  }
-  .options {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .opt-btn {
-    background: #f8f8f8;
-    border: 2px solid #e0e0e0;
-    border-radius: 16px;
-    padding: 16px 20px;
-    text-align: left;
-    font-family: 'Zen Maru Gothic', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
-    color: #333;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .opt-btn:hover {
-    border-color: #FF6B6B;
-    background: #fff0f0;
-    transform: translateX(4px);
-  }
-  .opt-btn.selected {
-    border-color: #FF6B6B;
-    background: linear-gradient(135deg, #fff0f0, #fff8e1);
-    color: #c62828;
-  }
-  .opt-icon { font-size: 22px; flex-shrink: 0; }
-  .nav-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 24px;
-  }
-  .nav-btn {
-    background: white;
-    border: 2px solid #ddd;
-    border-radius: 12px;
-    padding: 10px 24px;
-    font-family: 'Zen Maru Gothic', sans-serif;
-    font-weight: 700;
-    cursor: pointer;
-    font-size: 14px;
-    transition: all 0.2s;
-  }
-  .nav-btn:hover { border-color: #aaa; background: #f5f5f5; }
-  .nav-btn.primary {
-    background: linear-gradient(135deg, #6BCB77, #4D96FF);
-    border-color: transparent;
-    color: white;
-  }
-  .nav-btn.primary:hover { opacity: 0.85; }
-  .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+/* ===== QUIZ ===== */
+#sec-quiz { padding: 28px 16px; max-width: 660px; margin: 0 auto; }
+.progress-wrap { background: #e8e8e8; border-radius: 99px; height: 10px; margin-bottom: 7px; overflow: hidden; }
+.progress-bar { height: 100%; background: linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCB77); border-radius: 99px; transition: width .5s ease; }
+.progress-label { text-align: right; font-size: 12.5px; color: #aaa; font-weight: 700; margin-bottom: 20px; }
+.q-card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 28px 24px; }
+.q-text { font-size: clamp(15px, 3vw, 19px); font-weight: 900; color: var(--navy); margin-bottom: 22px; line-height: 1.65; }
+.options { display: flex; flex-direction: column; gap: 11px; }
+.opt-btn {
+  background: #f8f8f8; border: 2px solid #e4e4e4; border-radius: 16px;
+  padding: 15px 18px; text-align: left;
+  font-family: 'Noto Sans JP', sans-serif; font-size: 14.5px; font-weight: 700;
+  cursor: pointer; color: #333; display: flex; align-items: center; gap: 12px;
+  transition: all .18s;
+}
+.opt-btn:hover { border-color: #FF6B6B; background: #fff5f5; transform: translateX(4px); }
+.opt-btn.selected { border-color: #FF6B6B; background: linear-gradient(135deg, #fff0f0, #fff9e6); color: #c62828; }
+.opt-icon { font-size: 21px; flex-shrink: 0; }
+.nav-row { display: flex; justify-content: space-between; align-items: center; margin-top: 22px; }
+.nav-btn {
+  background: #fff; border: 2px solid #ddd; border-radius: 12px;
+  padding: 10px 22px; font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 700; font-size: 13.5px; cursor: pointer; transition: all .18s;
+}
+.nav-btn:hover { border-color: #aaa; background: #f5f5f5; }
+.nav-btn.primary { background: linear-gradient(135deg, #6BCB77, #4D96FF); border-color: transparent; color: #fff; }
+.nav-btn.primary:hover { opacity: .86; }
+.nav-btn:disabled { opacity: .3; cursor: not-allowed; }
 
-  /* ===== RESULT ===== */
-  #sec-result { padding: 30px 16px 50px; max-width: 720px; margin: 0 auto; }
-  .result-header {
-    text-align: center;
-    margin-bottom: 30px;
-  }
-  .result-header h2 {
-    font-size: clamp(22px, 5vw, 36px);
-    font-weight: 900;
-    color: var(--navy);
-    line-height: 1.3;
-  }
-  .result-header p { color: #666; margin-top: 8px; }
-  .result-card {
-    background: white;
-    border-radius: 24px;
-    box-shadow: var(--card-shadow);
-    padding: 24px;
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.2s;
-  }
-  .result-card:hover { transform: translateY(-3px); }
-  .result-card::before {
-    content: '';
-    position: absolute; left: 0; top: 0; bottom: 0;
-    width: 6px;
-  }
-  .rank-badge {
-    width: 54px;
-    height: 54px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'M PLUS Rounded 1c', sans-serif;
-    font-weight: 900;
-    font-size: 22px;
-    flex-shrink: 0;
-    color: white;
-  }
-  .result-info { flex: 1; }
-  .result-hobby {
-    font-size: clamp(18px, 3vw, 22px);
-    font-weight: 900;
-    color: #222;
-  }
-  .result-reason {
-    font-size: 13px;
-    color: #777;
-    margin-top: 4px;
-    line-height: 1.6;
-  }
-  .result-emoji { font-size: 40px; }
-  .retry-wrap {
-    text-align: center;
-    margin-top: 30px;
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  .back-list-btn {
-    background: white;
-    border: 2px solid var(--navy);
-    color: var(--navy);
-    font-family: 'M PLUS Rounded 1c', sans-serif;
-    font-weight: 700;
-    font-size: 16px;
-    padding: 14px 30px;
-    border-radius: 60px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .back-list-btn:hover { background: var(--navy); color: white; }
+/* ===== RESULT ===== */
+#sec-result { padding: 28px 16px 52px; max-width: 700px; margin: 0 auto; }
+.result-header { text-align: center; margin-bottom: 28px; }
+.result-header h2 { font-size: clamp(21px, 5vw, 34px); font-weight: 900; color: var(--navy); line-height: 1.35; }
+.result-header p { color: #888; margin-top: 8px; font-size: 13.5px; }
+.result-card {
+  background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);
+  padding: 22px; margin-bottom: 14px;
+  display: flex; align-items: center; gap: 18px;
+  position: relative; overflow: hidden;
+  opacity: 0; animation: popIn .42s ease forwards;
+  transition: transform .2s;
+}
+.result-card:hover { transform: translateY(-3px); }
+.result-card:nth-child(1){ animation-delay:.05s; background: linear-gradient(135deg,#fffde6,#fff); }
+.result-card:nth-child(2){ animation-delay:.14s; }
+.result-card:nth-child(3){ animation-delay:.23s; }
+.result-card:nth-child(4){ animation-delay:.32s; }
+.result-card:nth-child(5){ animation-delay:.41s; }
+@keyframes popIn {
+  from { opacity:0; transform:scale(.9) translateY(14px); }
+  to   { opacity:1; transform:scale(1) translateY(0); }
+}
+.result-card::before {
+  content:''; position:absolute; left:0; top:0; bottom:0; width:6px; border-radius:4px 0 0 4px;
+}
+.result-card:nth-child(1)::before { background:#FFD700; }
+.result-card:nth-child(2)::before { background:#90A4AE; }
+.result-card:nth-child(3)::before { background:#FF8A65; }
+.result-card:nth-child(4)::before { background:#81C784; }
+.result-card:nth-child(5)::before { background:#CE93D8; }
+.rank-badge {
+  width: 52px; height: 52px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Noto Sans JP', sans-serif; font-weight: 900;
+  font-size: 20px; flex-shrink: 0; color: #fff;
+}
+.result-card:nth-child(1) .rank-badge { background: linear-gradient(135deg,#FFD700,#FFA000); }
+.result-card:nth-child(2) .rank-badge { background: linear-gradient(135deg,#90A4AE,#546E7A); }
+.result-card:nth-child(3) .rank-badge { background: linear-gradient(135deg,#FF8A65,#E64A19); }
+.result-card:nth-child(4) .rank-badge { background: linear-gradient(135deg,#81C784,#388E3C); }
+.result-card:nth-child(5) .rank-badge { background: linear-gradient(135deg,#CE93D8,#8E24AA); }
+.result-info { flex: 1; }
+.result-hobby { font-size: clamp(17px, 3vw, 21px); font-weight: 900; color: #222; }
+.result-cat { font-size: 11.5px; color: #bbb; margin-top: 2px; }
+.result-reason { font-size: 12.5px; color: #666; margin-top: 6px; line-height: 1.75; }
+.score-bar-wrap { margin-top: 8px; background: #eee; border-radius: 99px; height: 5px; overflow: hidden; }
+.score-bar { height: 100%; border-radius: 99px; background: linear-gradient(90deg,#FF6B6B,#FFD93D); }
+.retry-wrap { text-align: center; margin-top: 28px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.outline-btn {
+  background: #fff; border: 2px solid var(--navy); color: var(--navy);
+  font-family: 'Noto Sans JP', sans-serif; font-weight: 700;
+  font-size: 15px; padding: 13px 28px; border-radius: 60px;
+  cursor: pointer; transition: all .18s;
+}
+.outline-btn:hover { background: var(--navy); color: #fff; }
 
-  /* top 1 特別 */
-  .result-card:nth-child(1) { background: linear-gradient(135deg, #fff9c4, #fff); }
-  .result-card:nth-child(1) .rank-badge { background: linear-gradient(135deg, #FFD700, #FFA000); }
-  .result-card:nth-child(1)::before { background: #FFD700; }
-  .result-card:nth-child(2) .rank-badge { background: linear-gradient(135deg, #90A4AE, #607D8B); }
-  .result-card:nth-child(2)::before { background: #90A4AE; }
-  .result-card:nth-child(3) .rank-badge { background: linear-gradient(135deg, #FF8A65, #F4511E); }
-  .result-card:nth-child(3)::before { background: #FF8A65; }
-  .result-card:nth-child(4) .rank-badge { background: linear-gradient(135deg, #81C784, #388E3C); }
-  .result-card:nth-child(4)::before { background: #81C784; }
-  .result-card:nth-child(5) .rank-badge { background: linear-gradient(135deg, #CE93D8, #8E24AA); }
-  .result-card:nth-child(5)::before { background: #CE93D8; }
-
-  @keyframes pop { 0%{opacity:0;transform:scale(0.8) translateY(20px)} 100%{opacity:1;transform:scale(1) translateY(0)} }
-  .result-card { animation: pop 0.4s ease forwards; }
-  .result-card:nth-child(1) { animation-delay: 0.05s; opacity:0; }
-  .result-card:nth-child(2) { animation-delay: 0.15s; opacity:0; }
-  .result-card:nth-child(3) { animation-delay: 0.25s; opacity:0; }
-  .result-card:nth-child(4) { animation-delay: 0.35s; opacity:0; }
-  .result-card:nth-child(5) { animation-delay: 0.45s; opacity:0; }
+/* ===== SHAKE ANIMATION ===== */
+@keyframes shake {
+  0%,100%{ transform:translateX(0); }
+  25%{ transform:translateX(-6px); }
+  75%{ transform:translateX(6px); }
+}
+.shake { animation: shake .3s ease; }
 </style>
 </head>
 <body>
 
 <header>
   <h1>🌟 習い事さがし！<br>あなたにぴったりの習い事テスト 🌟</h1>
-  <p>100この習い事から、あなたにぴったりのTop5を見つけよう！</p>
+  <p>102この習い事から、あなたにぴったりのTop5を見つけよう！</p>
 </header>
 
-<!-- ===== セクション1: 100この習い事リスト ===== -->
+<!-- LIST -->
 <div id="sec-list" class="section active">
-  <h2>📋 100この習い事リスト</h2>
-  <p class="sub">まずは全部見てみよう！気になるものはあるかな？</p>
-  <div id="hobby-list-container"></div>
-  <div class="start-btn-wrap">
-    <button class="big-btn" onclick="goToQuiz()">
-      🎯 テストをスタートする！
-    </button>
-  </div>
-</div>
-
-<!-- ===== セクション2: クイズ ===== -->
-<div id="sec-quiz" class="section">
-  <div class="progress-bar-wrap">
-    <div class="progress-bar" id="progress-bar" style="width:0%"></div>
-  </div>
-  <div class="question-card">
-    <div class="q-num" id="q-num">問題 1 / 5</div>
-    <div class="q-text" id="q-text"></div>
-    <div class="options" id="q-options"></div>
-    <div class="nav-row">
-      <button class="nav-btn" id="prev-btn" onclick="prevQ()" disabled>← もどる</button>
-      <button class="nav-btn primary" id="next-btn" onclick="nextQ()">つぎへ →</button>
+  <div id="sec-list-inner">
+    <div style="max-width:980px;margin:0 auto;padding:28px 16px 8px">
+      <h2>📋 102この習い事リスト</h2>
+      <p class="sub">まずは全部見てみよう！気になるものはあるかな？</p>
+    </div>
+    <div style="max-width:980px;margin:0 auto;padding:0 16px" id="hobby-list-container"></div>
+    <div class="start-btn-wrap" style="padding-bottom:30px">
+      <button class="big-btn" onclick="goToQuiz()">🎯 テストをスタートする！</button>
     </div>
   </div>
 </div>
 
-<!-- ===== セクション3: 結果 ===== -->
+<!-- QUIZ -->
+<div id="sec-quiz" class="section">
+  <div class="progress-wrap"><div class="progress-bar" id="progress-bar" style="width:0%"></div></div>
+  <div class="progress-label" id="q-num">問題 1 / 7</div>
+  <div class="q-card">
+    <div class="q-text" id="q-text"></div>
+    <div class="options" id="q-options"></div>
+    <div class="nav-row">
+      <button class="nav-btn" id="prev-btn" onclick="prevQ()" disabled>← もどる</button>
+      <button class="nav-btn primary" id="next-btn">つぎへ →</button>
+    </div>
+  </div>
+</div>
+
+<!-- RESULT -->
 <div id="sec-result" class="section">
   <div class="result-header">
-    <h2>🎉 あなたにぴったりの<br>習い事Top5！</h2>
-    <p>答えをもとに、あなたに合いそうな習い事をえらびました！</p>
+    <h2>🎉 あなたにぴったりの<br>習い事 Top5！</h2>
+    <p>7つの答えをもとに、102この習い事からえらびました！</p>
   </div>
   <div id="result-list"></div>
   <div class="retry-wrap">
-    <button class="back-list-btn" onclick="goToList()">📋 リストにもどる</button>
+    <button class="outline-btn" onclick="goToList()">📋 リストにもどる</button>
     <button class="big-btn" onclick="restartQuiz()">🔄 もう一度テストする</button>
   </div>
 </div>
 
 <script>
-/* ====================================
-   データ定義
-==================================== */
-const categories = [
-  {
-    name: "⚽ スポーツ（チーム）",
-    color: "#4CAF50",
-    hobbies: [
-      "サッカー", "バスケットボール", "バレーボール",
-      "野球", "ソフトボール", "ハンドボール",
-      "ラグビー", "アイスホッケー", "ドッジボール",
-      "アメリカンフットボール", "ラクロス", "水球"
-    ]
-  },
-  {
-    name: "🏃 スポーツ（一人・少人数）",
-    color: "#FF7043",
-    hobbies: [
-      "水泳", "体そう", "テニス",
-      "卓球", "バドミントン", "陸上",
-      "柔道", "空手", "剣道",
-      "合気道", "レスリング", "ボルダリング",
-      "フィギュアスケート", "スキー・スノーボード", "馬術"
-    ]
-  },
-  {
-    name: "🎵 音楽",
-    color: "#9C27B0",
-    hobbies: [
-      "ピアノ", "バイオリン", "ギター",
-      "ドラム", "フルート", "トランペット",
-      "チェロ", "ウクレレ", "声楽（うた）",
-      "合唱", "和太鼓", "三味線（しゃみせん）",
-      "尺八（しゃくはち）"
-    ]
-  },
-  {
-    name: "💃 ダンス・演技",
-    color: "#E91E63",
-    hobbies: [
-      "バレエ", "ヒップホップダンス", "日本舞踊（ぶよう）",
-      "フラダンス", "社交ダンス", "チアダンス",
-      "演劇・ミュージカル", "落語（らくご）", "よさこいソーラン"
-    ]
-  },
-  {
-    name: "🎨 アート・ものづくり",
-    color: "#FF9800",
-    hobbies: [
-      "絵画（油絵・水彩など）", "書道", "陶芸（とうげい）",
-      "工作・木工", "手芸・ぬいぐるみ作り", "折り紙・切り紙",
-      "マンガ・イラスト", "写真", "プログラミング",
-      "ロボット作り"
-    ]
-  },
-  {
-    name: "📚 学習・スキル",
-    color: "#2196F3",
-    hobbies: [
-      "英語（英会話）", "学習塾", "そろばん",
-      "習字（書き方）", "速読（そくどく）", "プログラミング（学習）",
-      "将棋（しょうぎ）", "囲碁（いご）", "チェス"
-    ]
-  },
-  {
-    name: "🌿 自然・アウトドア",
-    color: "#4CAF50",
-    hobbies: [
-      "ガーデニング・植物そだて", "料理・お菓子作り", "釣り",
-      "キャンプ・サバイバル", "登山・ハイキング", "野鳥観察",
-      "天体（星）観察", "農業体験"
-    ]
-  },
-  {
-    name: "🧘 こころとからだ",
-    color: "#00BCD4",
-    hobbies: [
-      "ヨガ", "座禅（ざぜん）", "マインドフルネス",
-      "囲碁（いご）", "詩（し）・俳句（はいく）作り", "日記・作文",
-      "読書クラブ"
-    ]
-  },
-  {
-    name: "🎭 文化・伝統",
-    color: "#795548",
-    hobbies: [
-      "茶道（さどう）", "花道（はなみち）・生け花", "能・狂言（のう・きょうげん）",
-      "着物着付け（きつけ）", "華道（かどう）", "香道（こうどう）"
-    ]
-  },
-  {
-    name: "🚀 先進・ユニーク",
-    color: "#607D8B",
-    hobbies: [
-      "e-Sports（ゲーム大会）", "マジック・手品", "ジャグリング",
-      "お笑い・コント", "科学実験クラブ", "動画・映えづくり",
-      "ポッドキャスト・ラジオ"
-    ]
-  }
+/* ============================================================
+   習い事データ（102個）— 全習い事タグ数を5個に統一
+   タグ一覧（20種）:
+   体力, チーム, 競技, 屋外, 勝負, 動的, 静,
+   音楽, リズム, 舞台, 芸術, 創作, 手作り,
+   デジタル, 論理, 将来, 語学, 伝統, 自然, 健康
+============================================================ */
+const hobbies = [
+  // ⚽ スポーツ（チーム）
+  {name:"サッカー",               cat:"⚽ スポーツ（チーム）",      color:"#2E7D32", emoji:"⚽", tags:["体力","チーム","競技","屋外","勝負"]},
+  {name:"バスケットボール",       cat:"⚽ スポーツ（チーム）",      color:"#2E7D32", emoji:"🏀", tags:["体力","チーム","競技","勝負","動的"]},
+  {name:"バレーボール",           cat:"⚽ スポーツ（チーム）",      color:"#2E7D32", emoji:"🏐", tags:["体力","チーム","競技","動的","舞台"]},
+  {name:"野球",                   cat:"⚽ スポーツ（チーム）",      color:"#2E7D32", emoji:"⚾", tags:["体力","チーム","競技","屋外","勝負"]},
+  {name:"ソフトボール",           cat:"⚽ スポーツ（チーム）",      color:"#2E7D32", emoji:"🥎", tags:["体力","チーム","競技","屋外","動的"]},
+  {name:"ハンドボール",           cat:"⚽ スポーツ（チーム）",      color:"#2E7D32", emoji:"🤾", tags:["体力","チーム","競技","動的","勝負"]},
+  {name:"ラグビー",               cat:"⚽ スポーツ（チーム）",      color:"#2E7D32", emoji:"🏉", tags:["体力","チーム","競技","屋外","勝負"]},
+  {name:"アイスホッケー",         cat:"⚽ スポーツ（チーム）",      color:"#2E7D32", emoji:"🏒", tags:["体力","チーム","競技","勝負","動的"]},
+  {name:"ドッジボール",           cat:"⚽ スポーツ（チーム）",      color:"#2E7D32", emoji:"🔵", tags:["体力","チーム","動的","屋外","競技"]},
+  {name:"アメリカンフットボール", cat:"⚽ スポーツ（チーム）",      color:"#2E7D32", emoji:"🏈", tags:["体力","チーム","競技","屋外","勝負"]},
+  // 🏃 スポーツ（一人・少人数）
+  {name:"水泳",                   cat:"🏃 スポーツ（一人・少人数）", color:"#0277BD", emoji:"🏊", tags:["体力","競技","勝負","動的","健康"]},
+  {name:"体そう",                 cat:"🏃 スポーツ（一人・少人数）", color:"#0277BD", emoji:"🤸", tags:["体力","競技","舞台","動的","芸術"]},
+  {name:"テニス",                 cat:"🏃 スポーツ（一人・少人数）", color:"#0277BD", emoji:"🎾", tags:["体力","競技","勝負","屋外","動的"]},
+  {name:"卓球（たっきゅう）",     cat:"🏃 スポーツ（一人・少人数）", color:"#0277BD", emoji:"🏓", tags:["体力","競技","勝負","論理","動的"]},
+  {name:"バドミントン",           cat:"🏃 スポーツ（一人・少人数）", color:"#0277BD", emoji:"🏸", tags:["体力","競技","勝負","動的","屋外"]},
+  {name:"陸上（りくじょう）",     cat:"🏃 スポーツ（一人・少人数）", color:"#0277BD", emoji:"🏃", tags:["体力","競技","屋外","動的","自然"]},
+  {name:"柔道（じゅうどう）",     cat:"🏃 スポーツ（一人・少人数）", color:"#0277BD", emoji:"🥋", tags:["体力","競技","勝負","伝統","動的"]},
+  {name:"空手（からて）",         cat:"🏃 スポーツ（一人・少人数）", color:"#0277BD", emoji:"🥋", tags:["体力","競技","勝負","伝統","健康"]},
+  {name:"剣道（けんどう）",       cat:"🏃 スポーツ（一人・少人数）", color:"#0277BD", emoji:"⚔️", tags:["体力","競技","勝負","伝統","静"]},
+  {name:"ボルダリング",           cat:"🏃 スポーツ（一人・少人数）", color:"#0277BD", emoji:"🧗", tags:["体力","競技","屋外","論理","動的"]},
+  {name:"ゴルフ",                 cat:"🏃 スポーツ（一人・少人数）", color:"#0277BD", emoji:"⛳", tags:["体力","競技","屋外","静","将来"]},
+  {name:"ボクシング",             cat:"🏃 スポーツ（一人・少人数）", color:"#0277BD", emoji:"🥊", tags:["体力","競技","勝負","健康","動的"]},
+  // 🎵 音楽
+  {name:"ピアノ",                 cat:"🎵 音楽",                    color:"#6A1B9A", emoji:"🎹", tags:["音楽","舞台","芸術","将来","静"]},
+  {name:"バイオリン",             cat:"🎵 音楽",                    color:"#6A1B9A", emoji:"🎻", tags:["音楽","舞台","芸術","伝統","静"]},
+  {name:"ギター",                 cat:"🎵 音楽",                    color:"#6A1B9A", emoji:"🎸", tags:["音楽","舞台","芸術","創作","動的"]},
+  {name:"ドラム",                 cat:"🎵 音楽",                    color:"#6A1B9A", emoji:"🥁", tags:["音楽","リズム","舞台","体力","動的"]},
+  {name:"フルート",               cat:"🎵 音楽",                    color:"#6A1B9A", emoji:"🎶", tags:["音楽","舞台","芸術","静","伝統"]},
+  {name:"トランペット",           cat:"🎵 音楽",                    color:"#6A1B9A", emoji:"🎺", tags:["音楽","舞台","芸術","チーム","動的"]},
+  {name:"チェロ",                 cat:"🎵 音楽",                    color:"#6A1B9A", emoji:"🎻", tags:["音楽","舞台","芸術","静","チーム"]},
+  {name:"ウクレレ",               cat:"🎵 音楽",                    color:"#6A1B9A", emoji:"🎸", tags:["音楽","舞台","芸術","創作","動的"]},
+  {name:"声楽（うた）",           cat:"🎵 音楽",                    color:"#6A1B9A", emoji:"🎤", tags:["音楽","舞台","芸術","語学","動的"]},
+  {name:"和太鼓（わだいこ）",     cat:"🎵 音楽",                    color:"#6A1B9A", emoji:"🥁", tags:["音楽","リズム","舞台","伝統","体力"]},
+  // 💃 ダンス・演技
+  {name:"バレエ",                 cat:"💃 ダンス・演技",            color:"#AD1457", emoji:"🩰", tags:["体力","舞台","芸術","リズム","静"]},
+  {name:"ヒップホップダンス",     cat:"💃 ダンス・演技",            color:"#AD1457", emoji:"💃", tags:["体力","舞台","芸術","リズム","動的"]},
+  {name:"日本舞踊（にほんぶよう）",cat:"💃 ダンス・演技",           color:"#AD1457", emoji:"👘", tags:["舞台","芸術","リズム","伝統","静"]},
+  {name:"フラダンス",             cat:"💃 ダンス・演技",            color:"#AD1457", emoji:"🌺", tags:["舞台","芸術","リズム","動的","健康"]},
+  {name:"ブレイクダンス",         cat:"💃 ダンス・演技",            color:"#AD1457", emoji:"🕺", tags:["体力","舞台","芸術","リズム","勝負"]},
+  {name:"チアダンス",             cat:"💃 ダンス・演技",            color:"#AD1457", emoji:"📣", tags:["体力","チーム","舞台","リズム","動的"]},
+  {name:"演劇（えんげき）",       cat:"💃 ダンス・演技",            color:"#AD1457", emoji:"🎭", tags:["舞台","芸術","語学","創作","チーム"]},
+  {name:"ミュージカル",           cat:"💃 ダンス・演技",            color:"#AD1457", emoji:"🎤", tags:["音楽","舞台","芸術","リズム","チーム"]},
+  {name:"落語（らくご）",         cat:"💃 ダンス・演技",            color:"#AD1457", emoji:"🎙️", tags:["舞台","語学","伝統","芸術","静"]},
+  {name:"よさこいソーラン",       cat:"💃 ダンス・演技",            color:"#AD1457", emoji:"🎏", tags:["体力","チーム","舞台","伝統","リズム"]},
+  // 🎨 アート・ものづくり
+  {name:"絵画（油絵・水彩）",     cat:"🎨 アート・ものづくり",      color:"#E65100", emoji:"🎨", tags:["芸術","創作","手作り","静","将来"]},
+  {name:"書道（しょどう）",       cat:"🎨 アート・ものづくり",      color:"#E65100", emoji:"✍️", tags:["芸術","創作","伝統","手作り","静"]},
+  {name:"陶芸（とうげい）",       cat:"🎨 アート・ものづくり",      color:"#E65100", emoji:"🏺", tags:["芸術","創作","手作り","静","伝統"]},
+  {name:"木工・工作",             cat:"🎨 アート・ものづくり",      color:"#E65100", emoji:"🔨", tags:["創作","手作り","静","論理","将来"]},
+  {name:"手芸・ぬい物",           cat:"🎨 アート・ものづくり",      color:"#E65100", emoji:"🧵", tags:["芸術","創作","手作り","静","伝統"]},
+  {name:"折り紙・切り紙",         cat:"🎨 アート・ものづくり",      color:"#E65100", emoji:"🦢", tags:["芸術","創作","手作り","静","伝統"]},
+  {name:"マンガ・イラスト",       cat:"🎨 アート・ものづくり",      color:"#E65100", emoji:"✏️", tags:["芸術","創作","手作り","静","将来"]},
+  {name:"写真（しゃしん）",       cat:"🎨 アート・ものづくり",      color:"#E65100", emoji:"📷", tags:["芸術","創作","屋外","将来","デジタル"]},
+  {name:"レザークラフト",         cat:"🎨 アート・ものづくり",      color:"#E65100", emoji:"👜", tags:["創作","手作り","静","将来","芸術"]},
+  {name:"ガラス工芸",             cat:"🎨 アート・ものづくり",      color:"#E65100", emoji:"🫙", tags:["芸術","創作","手作り","静","伝統"]},
+  // 📚 学習・スキル
+  {name:"英会話（えいかいわ）",   cat:"📚 学習・スキル",            color:"#1565C0", emoji:"🗣️", tags:["語学","将来","チーム","論理","デジタル"]},
+  {name:"学習塾（がくしゅうじゅく）",cat:"📚 学習・スキル",         color:"#1565C0", emoji:"✏️", tags:["論理","将来","静","勝負","手作り"]},
+  {name:"そろばん",               cat:"📚 学習・スキル",            color:"#1565C0", emoji:"🧮", tags:["論理","静","伝統","勝負","健康"]},
+  {name:"速読（そくどく）",       cat:"📚 学習・スキル",            color:"#1565C0", emoji:"📖", tags:["論理","将来","静","語学","手作り"]},
+  {name:"プログラミング",         cat:"📚 学習・スキル",            color:"#1565C0", emoji:"💻", tags:["デジタル","論理","創作","将来","静"]},
+  {name:"ロボット作り",           cat:"📚 学習・スキル",            color:"#1565C0", emoji:"🤖", tags:["デジタル","論理","創作","将来","手作り"]},
+  {name:"将棋（しょうぎ）",       cat:"📚 学習・スキル",            color:"#1565C0", emoji:"♟️", tags:["論理","勝負","伝統","静","将来"]},
+  {name:"囲碁（いご）",           cat:"📚 学習・スキル",            color:"#1565C0", emoji:"⚫", tags:["論理","勝負","伝統","静","健康"]},
+  {name:"チェス",                 cat:"📚 学習・スキル",            color:"#1565C0", emoji:"♟️", tags:["論理","勝負","静","将来","デジタル"]},
+  {name:"ディベート",             cat:"📚 学習・スキル",            color:"#1565C0", emoji:"💬", tags:["語学","論理","将来","チーム","勝負"]},
+  // 🌿 自然・アウトドア
+  {name:"ガーデニング・植物そだて",cat:"🌿 自然・アウトドア",        color:"#388E3C", emoji:"🌱", tags:["自然","手作り","静","屋外","健康"]},
+  {name:"料理・お菓子作り",       cat:"🌿 自然・アウトドア",        color:"#388E3C", emoji:"🍳", tags:["自然","創作","手作り","静","将来"]},
+  {name:"釣り（つり）",           cat:"🌿 自然・アウトドア",        color:"#388E3C", emoji:"🎣", tags:["自然","屋外","静","勝負","健康"]},
+  {name:"キャンプ・サバイバル",   cat:"🌿 自然・アウトドア",        color:"#388E3C", emoji:"🏕️", tags:["自然","屋外","体力","チーム","将来"]},
+  {name:"登山（とざん）・ハイキング",cat:"🌿 自然・アウトドア",     color:"#388E3C", emoji:"⛰️", tags:["自然","屋外","体力","健康","勝負"]},
+  {name:"野鳥（やちょう）観察",   cat:"🌿 自然・アウトドア",        color:"#388E3C", emoji:"🦅", tags:["自然","屋外","静","論理","健康"]},
+  {name:"天体（星）観察",         cat:"🌿 自然・アウトドア",        color:"#388E3C", emoji:"🔭", tags:["自然","屋外","静","論理","将来"]},
+  {name:"農業体験",               cat:"🌿 自然・アウトドア",        color:"#388E3C", emoji:"🌾", tags:["自然","屋外","体力","手作り","チーム"]},
+  {name:"サバゲー",               cat:"🌿 自然・アウトドア",        color:"#388E3C", emoji:"🎯", tags:["チーム","屋外","勝負","体力","競技"]},
+  {name:"昆虫（こんちゅう）採集", cat:"🌿 自然・アウトドア",        color:"#388E3C", emoji:"🐛", tags:["自然","屋外","論理","静","健康"]},
+  // 🧘 こころとからだ
+  {name:"ヨガ",                   cat:"🧘 こころとからだ",          color:"#00695C", emoji:"🧘", tags:["健康","静","体力","将来","自然"]},
+  {name:"座禅（ざぜん）",         cat:"🧘 こころとからだ",          color:"#00695C", emoji:"🪷", tags:["健康","静","伝統","自然","論理"]},
+  {name:"フィットネス",           cat:"🧘 こころとからだ",          color:"#00695C", emoji:"💪", tags:["体力","健康","将来","動的","競技"]},
+  {name:"スケートボード",         cat:"🧘 こころとからだ",          color:"#00695C", emoji:"🛹", tags:["体力","屋外","動的","勝負","芸術"]},
+  {name:"フリスビー",             cat:"🧘 こころとからだ",          color:"#00695C", emoji:"🥏", tags:["体力","チーム","屋外","勝負","健康"]},
+  {name:"馬術（ばじゅつ）",       cat:"🧘 こころとからだ",          color:"#00695C", emoji:"🐎", tags:["体力","自然","勝負","競技","伝統"]},
+  {name:"フィギュアスケート",     cat:"🧘 こころとからだ",          color:"#00695C", emoji:"⛸️", tags:["体力","舞台","芸術","リズム","競技"]},
+  {name:"スキー・スノーボード",   cat:"🧘 こころとからだ",          color:"#00695C", emoji:"⛷️", tags:["体力","屋外","競技","動的","自然"]},
+  {name:"サーフィン",             cat:"🧘 こころとからだ",          color:"#00695C", emoji:"🏄", tags:["体力","屋外","動的","自然","勝負"]},
+  {name:"合気道（あいきどう）",   cat:"🧘 こころとからだ",          color:"#00695C", emoji:"🥋", tags:["体力","伝統","健康","動的","将来"]},
+  // 🎭 文化・伝統
+  {name:"茶道（さどう）",         cat:"🎭 文化・伝統",              color:"#4E342E", emoji:"🍵", tags:["伝統","静","健康","手作り","語学"]},
+  {name:"生け花（いけばな）",     cat:"🎭 文化・伝統",              color:"#4E342E", emoji:"💐", tags:["伝統","静","芸術","手作り","自然"]},
+  {name:"三味線（しゃみせん）",   cat:"🎭 文化・伝統",              color:"#4E342E", emoji:"🎸", tags:["音楽","伝統","舞台","芸術","手作り"]},
+  {name:"尺八（しゃくはち）",     cat:"🎭 文化・伝統",              color:"#4E342E", emoji:"🎵", tags:["音楽","伝統","静","自然","健康"]},
+  {name:"着物着付け（きつけ）",   cat:"🎭 文化・伝統",              color:"#4E342E", emoji:"👘", tags:["伝統","静","芸術","手作り","将来"]},
+  {name:"能・狂言（のう・きょうげん）",cat:"🎭 文化・伝統",         color:"#4E342E", emoji:"🎭", tags:["伝統","舞台","芸術","静","語学"]},
+  {name:"和菓子（わがし）作り",   cat:"🎭 文化・伝統",              color:"#4E342E", emoji:"🍡", tags:["伝統","手作り","創作","静","将来"]},
+  {name:"刺しゅう",               cat:"🎭 文化・伝統",              color:"#4E342E", emoji:"🧵", tags:["伝統","手作り","創作","健康","芸術"]},
+  {name:"組みひも",               cat:"🎭 文化・伝統",              color:"#4E342E", emoji:"🪢", tags:["伝統","手作り","静","芸術","将来"]},
+  {name:"華道（かどう）",         cat:"🎭 文化・伝統",              color:"#4E342E", emoji:"🌸", tags:["伝統","静","自然","手作り","創作"]},
+  // 🚀 先進・ユニーク
+  {name:"e-Sports（ゲーム大会）", cat:"🚀 先進・ユニーク",          color:"#5C35CC", emoji:"🎮", tags:["デジタル","論理","勝負","競技","チーム"]},
+  {name:"マジック・手品",         cat:"🚀 先進・ユニーク",          color:"#5C35CC", emoji:"🪄", tags:["舞台","創作","芸術","勝負","手作り"]},
+  {name:"ジャグリング",           cat:"🚀 先進・ユニーク",          color:"#5C35CC", emoji:"🤹", tags:["舞台","体力","創作","動的","芸術"]},
+  {name:"お笑い・コント",         cat:"🚀 先進・ユニーク",          color:"#5C35CC", emoji:"😂", tags:["舞台","語学","チーム","創作","芸術"]},
+  {name:"科学実験クラブ",         cat:"🚀 先進・ユニーク",          color:"#5C35CC", emoji:"🔬", tags:["論理","デジタル","創作","将来","手作り"]},
+  {name:"動画制作",               cat:"🚀 先進・ユニーク",          color:"#5C35CC", emoji:"🎬", tags:["デジタル","創作","将来","芸術","舞台"]},
+  {name:"ポッドキャスト・ラジオ", cat:"🚀 先進・ユニーク",          color:"#5C35CC", emoji:"🎙️", tags:["デジタル","語学","将来","創作","舞台"]},
+  {name:"3Dプリンター",           cat:"🚀 先進・ユニーク",          color:"#5C35CC", emoji:"🖨️", tags:["デジタル","論理","創作","将来","手作り"]},
+  {name:"ドローン操作",           cat:"🚀 先進・ユニーク",          color:"#5C35CC", emoji:"🚁", tags:["デジタル","論理","屋外","将来","競技"]},
+  {name:"AI工作",                 cat:"🚀 先進・ユニーク",          color:"#5C35CC", emoji:"🤖", tags:["デジタル","論理","創作","将来","手作り"]},
 ];
 
-/* 全習い事を番号付きでフラットリストに変換 */
-let allHobbies = [];
-categories.forEach(cat => cat.hobbies.forEach(h => allHobbies.push({ name: h, cat: cat.name })));
-// 100個になるようにダミー補完（既に100近いが確認済み）
-
-/* ====================================
-   質問定義（5問）
-==================================== */
+/* ============================================================
+   質問定義（7問）
+   add: +10点/タグ一致,  sub: -5点/タグ一致
+============================================================ */
 const questions = [
   {
-    text: "🤔 休みの日、何をしているときがいちばん楽しい？",
-    options: [
-      { icon: "🏃", label: "体を思い切り動かす", tags: ["スポーツ"] },
-      { icon: "🎨", label: "何かを作ったり絵をかいたりする", tags: ["アート"] },
-      { icon: "🎵", label: "音楽をきいたり歌ったりする", tags: ["音楽", "ダンス"] },
-      { icon: "📖", label: "本を読んだり考えたりする", tags: ["学習", "こころ"] },
+    text:"🤔 休みの日、何をしているときがいちばん楽しい？",
+    options:[
+      {icon:"🏃", label:"体を思い切り動かす！スポーツや外あそびが好き",
+       add:["体力","動的","屋外"],        sub:["静","手作り"]},
+      {icon:"🎨", label:"絵をかいたり、ものを作ったりするのが好き",
+       add:["静","手作り","芸術"],        sub:["体力","動的"]},
+      {icon:"🎵", label:"音楽・ダンス・歌・演じることが好き",
+       add:["舞台","リズム","芸術"],      sub:["論理","デジタル"]},
+      {icon:"💻", label:"ゲーム・プログラミング・考えることが好き",
+       add:["デジタル","論理","静"],      sub:["体力","屋外"]},
     ]
   },
   {
-    text: "💪 自分のどんなところをのばしたい？",
-    options: [
-      { icon: "🤸", label: "体力・運動", tags: ["スポーツ"] },
-      { icon: "🧠", label: "頭のよさ・知識", tags: ["学習", "こころ"] },
-      { icon: "✨", label: "センス・表げん力", tags: ["アート", "音楽", "ダンス"] },
-      { icon: "🌍", label: "コミュニケーション・英語", tags: ["学習"] },
+    text:"👥 どんな雰囲気（ふんいき）で習い事をしたい？",
+    options:[
+      {icon:"⚽", label:"みんなと力を合わせて！チームで外でやりたい",
+       add:["チーム","屋外","勝負"],      sub:["静","手作り"]},
+      {icon:"🧍", label:"一人でじっくり、自分のペースでやりたい",
+       add:["静","創作","将来"],          sub:["チーム","動的"]},
+      {icon:"🌿", label:"自然の中でのびのびやりたい！",
+       add:["自然","屋外","健康"],        sub:["デジタル","舞台"]},
+      {icon:"🧠", label:"頭をフル回転させて考えながらやりたい！",
+       add:["論理","勝負","静"],          sub:["体力","動的"]},
     ]
   },
   {
-    text: "👥 習い事はどんな雰囲気（ふんいき）が好き？",
-    options: [
-      { icon: "🏆", label: "チームで力を合わせる", tags: ["スポーツ（チーム）"] },
-      { icon: "🧍", label: "一人で集中してとりくむ", tags: ["学習", "こころ", "アート"] },
-      { icon: "🎭", label: "みんなの前で発表する", tags: ["音楽", "ダンス"] },
-      { icon: "🤝", label: "少人数でわきあいあい", tags: ["スポーツ（少人数）", "文化"] },
+    text:"🏆 習い事でどんなことをめざしたい？",
+    options:[
+      {icon:"🔥", label:"試合・大会で勝ちたい！競争が大好き",
+       add:["競技","勝負","体力"],        sub:["芸術","創作","静"]},
+      {icon:"🎤", label:"ステージで発表してみんなに見てもらいたい！",
+       add:["舞台","芸術","リズム"],      sub:["勝負","競技"]},
+      {icon:"🔨", label:"作品を作ったり、技術を身につけたい",
+       add:["手作り","創作","将来"],      sub:["勝負","舞台","体力"]},
+      {icon:"🌱", label:"心と体を健康にしたい・マイペースに楽しみたい",
+       add:["健康","自然","静"],          sub:["競技","舞台"]},
     ]
   },
   {
-    text: "🌟 将来やってみたいことに近いのは？",
-    options: [
-      { icon: "🏅", label: "スポーツせん手・体を使う仕事", tags: ["スポーツ"] },
-      { icon: "🎤", label: "音楽家・ダンサー・芸術家", tags: ["音楽", "ダンス", "アート"] },
-      { icon: "💻", label: "プログラマー・研究者・医者", tags: ["学習", "先進"] },
-      { icon: "🍀", label: "まだよくわからない・なんでもやりたい", tags: ["アート", "自然", "文化"] },
+    text:"🌟 将来なりたい仕事や夢に近いのはどれ？",
+    options:[
+      {icon:"🏅", label:"スポーツせん手・体を使う仕事がしたい",
+       add:["体力","競技","動的"],        sub:["デジタル","静"]},
+      {icon:"🎨", label:"音楽家・アーティスト・クリエイターになりたい",
+       add:["芸術","音楽","舞台"],        sub:["論理","デジタル"]},
+      {icon:"💻", label:"エンジニア・研究者・AIの仕事がしたい",
+       add:["デジタル","将来","論理"],    sub:["伝統","体力"]},
+      {icon:"🌏", label:"伝統を守る仕事・語学を使う仕事がしたい",
+       add:["伝統","語学","将来"],        sub:["デジタル","動的"]},
     ]
   },
   {
-    text: "🎯 習い事に対して大事なのは？",
-    options: [
-      { icon: "🔥", label: "しっかり試合・発表がある", tags: ["スポーツ", "音楽", "ダンス"] },
-      { icon: "📅", label: "自分のペースでできる", tags: ["アート", "こころ"] },
-      { icon: "🌱", label: "将来にも役立つスキル", tags: ["学習", "先進"] },
-      { icon: "🎉", label: "とにかく楽しい・友達ができる", tags: ["スポーツ（チーム）", "ダンス", "文化"] },
+    text:"🌿 どんな場所・かんきょうで習い事がしたい？",
+    options:[
+      {icon:"🌲", label:"外で、自然の中でのびのびやりたい！",
+       add:["自然","屋外","体力"],        sub:["デジタル","静"]},
+      {icon:"🏠", label:"室内でじっくり集中してやりたい",
+       add:["手作り","創作","静"],        sub:["屋外","動的"]},
+      {icon:"🎵", label:"音楽・ダンス・表げんを磨（みが）きたい",
+       add:["音楽","リズム","舞台"],      sub:["論理","静"]},
+      {icon:"🔬", label:"最先たんの技術やデジタルを使いたい",
+       add:["デジタル","将来","屋外"],    sub:["伝統","手作り"]},
     ]
-  }
+  },
+  {
+    text:"🧠 どんな力をいちばんのばしたい？",
+    options:[
+      {icon:"💪", label:"体力・運動のうりょく・スポーツのうまさ",
+       add:["体力","競技","動的"],        sub:["論理","デジタル","静"]},
+      {icon:"🎨", label:"センス・表げん力・ものをつくる力",
+       add:["芸術","創作","手作り"],      sub:["論理","競技","動的"]},
+      {icon:"🧠", label:"論理・プログラミング・考える力",
+       add:["論理","デジタル","将来"],    sub:["伝統","体力","動的"]},
+      {icon:"🗣️", label:"伝える力・コミュニケーション・語学",
+       add:["語学","将来","チーム"],      sub:["静","手作り"]},
+    ]
+  },
+  {
+    text:"🎯 最後に！あなたが大事にしたいのはどれ？",
+    options:[
+      {icon:"⛩️", label:"日本の伝統（でんとう）・文化・古いものが好き",
+       add:["伝統","静","手作り"],        sub:["デジタル","動的"]},
+      {icon:"🚀", label:"新しいこと・テクノロジー・未来が好き",
+       add:["デジタル","将来","創作"],    sub:["伝統","静"]},
+      {icon:"🌿", label:"自然・生き物・地球のことが好き",
+       add:["自然","健康","屋外"],        sub:["デジタル","舞台"]},
+      {icon:"🎤", label:"人と交わること・発表・表げんすることが好き",
+       add:["舞台","語学","チーム"],      sub:["静","手作り"]},
+    ]
+  },
 ];
 
-/* ====================================
-   スコアリングマップ
-==================================== */
-const tagToCategory = {
-  "スポーツ": ["⚽ スポーツ（チーム）", "🏃 スポーツ（一人・少人数）"],
-  "スポーツ（チーム）": ["⚽ スポーツ（チーム）"],
-  "スポーツ（少人数）": ["🏃 スポーツ（一人・少人数）"],
-  "音楽": ["🎵 音楽"],
-  "ダンス": ["💃 ダンス・演技"],
-  "アート": ["🎨 アート・ものづくり"],
-  "学習": ["📚 学習・スキル"],
-  "こころ": ["🧘 こころとからだ"],
-  "自然": ["🌿 自然・アウトドア"],
-  "文化": ["🎭 文化・伝統"],
-  "先進": ["🚀 先進・ユニーク"],
-};
+/* ============================================================
+   結果コメント（タグ別）
+============================================================ */
+function buildReason(hobby, answers) {
+  const matchedTags = [];
+  answers.forEach((ai, qi) => {
+    const opt = questions[qi].options[ai];
+    opt.add.forEach(tag => { if (hobby.tags.includes(tag) && !matchedTags.includes(tag)) matchedTags.push(tag); });
+  });
+  const tagJa = {
+    体力:"体を動かすこと", チーム:"チームプレー", 競技:"競技・試合",
+    屋外:"外での活動", 勝負:"勝負ごと", 動的:"活動的なこと",
+    静:"静かな集中", 音楽:"音楽", リズム:"リズム感",
+    舞台:"舞台・発表", 芸術:"芸術・センス", 創作:"ものづくり",
+    手作り:"手作りの楽しさ", デジタル:"デジタル技術", 論理:"論理的思考",
+    将来:"将来に役立つスキル", 語学:"語学・コミュニケーション",
+    伝統:"日本の伝統", 自然:"自然・アウトドア", 健康:"健康・心身のバランス"
+  };
+  const top3 = matchedTags.slice(0, 3).map(t => tagJa[t] || t);
+  if (top3.length === 0) return "あなたの答えとよく合う習い事です！";
+  return `あなたが大切にしている「${top3.join("」「")}」にぴったりです！`;
+}
 
-/* ====================================
+/* ============================================================
    状態管理
-==================================== */
+============================================================ */
 let currentQ = 0;
 let answers = new Array(questions.length).fill(null);
 
-/* ====================================
-   DOM構築: 100リスト
-==================================== */
+/* ============================================================
+   リスト構築
+============================================================ */
+const categoryOrder = [
+  "⚽ スポーツ（チーム）","🏃 スポーツ（一人・少人数）","🎵 音楽",
+  "💃 ダンス・演技","🎨 アート・ものづくり","📚 学習・スキル",
+  "🌿 自然・アウトドア","🧘 こころとからだ","🎭 文化・伝統","🚀 先進・ユニーク"
+];
+
 function buildHobbyList() {
   const container = document.getElementById('hobby-list-container');
   let num = 1;
-  categories.forEach(cat => {
+  categoryOrder.forEach(catName => {
+    const catHobbies = hobbies.filter(h => h.cat === catName);
+    if (!catHobbies.length) return;
+    const color = catHobbies[0].color;
     const div = document.createElement('div');
     div.className = 'category';
-    div.innerHTML = `<div class="cat-header" style="background:${cat.color}">${cat.name}</div>
-      <div class="hobby-grid">${cat.hobbies.map(h => `<div class="hobby-chip" style="border-color:${cat.color}22">
-        <strong style="color:${cat.color};font-size:11px;">No.${num++}</strong><br>${h}
-      </div>`).join('')}</div>`;
+    div.innerHTML = `<div class="cat-header" style="background:${color}">${catName}</div>
+      <div class="hobby-grid">${catHobbies.map(h => `
+        <div class="hobby-chip" style="border-color:${color}44">
+          <strong style="color:${color};font-size:10px">No.${num++}</strong>
+          <div style="margin-top:3px">${h.emoji} ${h.name}</div>
+        </div>`).join('')}</div>`;
     container.appendChild(div);
   });
 }
 
-/* ====================================
-   ナビゲーション
-==================================== */
+/* ============================================================
+   ナビ
+============================================================ */
 function showSection(id) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
-
-function goToQuiz() {
-  currentQ = 0;
-  answers = new Array(questions.length).fill(null);
-  renderQuestion();
-  showSection('sec-quiz');
-}
-
-function goToList() { showSection('sec-list'); }
+function goToList()    { showSection('sec-list'); }
+function goToQuiz()    { currentQ = 0; answers = new Array(questions.length).fill(null); renderQ(); showSection('sec-quiz'); }
 function restartQuiz() { goToQuiz(); }
 
-/* ====================================
+/* ============================================================
    クイズ描画
-==================================== */
-function renderQuestion() {
+============================================================ */
+function renderQ() {
   const q = questions[currentQ];
-  document.getElementById('q-num').textContent = `問題 ${currentQ + 1} / ${questions.length}`;
+  document.getElementById('q-num').textContent = `問題 ${currentQ+1} / ${questions.length}`;
+  document.getElementById('progress-bar').style.width = `${currentQ / questions.length * 100}%`;
   document.getElementById('q-text').textContent = q.text;
-  document.getElementById('progress-bar').style.width = `${(currentQ / questions.length) * 100}%`;
-
-  const opts = document.getElementById('q-options');
-  opts.innerHTML = q.options.map((o, i) => `
-    <button class="opt-btn ${answers[currentQ] === i ? 'selected' : ''}" onclick="selectAnswer(${i})">
-      <span class="opt-icon">${o.icon}</span>
-      <span>${o.label}</span>
-    </button>
-  `).join('');
-
+  document.getElementById('q-options').innerHTML = q.options.map((o, i) => `
+    <button class="opt-btn ${answers[currentQ] === i ? 'selected' : ''}" onclick="selectAns(${i})">
+      <span class="opt-icon">${o.icon}</span><span>${o.label}</span>
+    </button>`).join('');
   document.getElementById('prev-btn').disabled = currentQ === 0;
-  const nextBtn = document.getElementById('next-btn');
+  const nb = document.getElementById('next-btn');
   if (currentQ === questions.length - 1) {
-    nextBtn.textContent = '結果を見る！🎉';
-    nextBtn.onclick = showResult;
+    nb.textContent = '結果を見る！🎉';
+    nb.onclick = showResult;
   } else {
-    nextBtn.textContent = 'つぎへ →';
-    nextBtn.onclick = nextQ;
+    nb.textContent = 'つぎへ →';
+    nb.onclick = nextQ;
   }
 }
 
-function selectAnswer(i) {
-  answers[currentQ] = i;
-  renderQuestion();
-}
+function selectAns(i) { answers[currentQ] = i; renderQ(); }
 
 function nextQ() {
   if (answers[currentQ] === null) {
-    const btns = document.querySelectorAll('.opt-btn');
-    btns.forEach(b => { b.style.animation = 'none'; b.offsetHeight; b.style.animation = 'shake 0.3s'; });
+    document.querySelectorAll('.opt-btn').forEach(b => {
+      b.classList.add('shake');
+      b.style.borderColor = '#FF6B6B';
+      setTimeout(() => { b.classList.remove('shake'); b.style.borderColor = ''; }, 600);
+    });
     return;
   }
-  if (currentQ < questions.length - 1) { currentQ++; renderQuestion(); }
+  if (currentQ < questions.length - 1) { currentQ++; renderQ(); }
 }
 
-function prevQ() {
-  if (currentQ > 0) { currentQ--; renderQuestion(); }
-}
+function prevQ() { if (currentQ > 0) { currentQ--; renderQ(); } }
 
-/* ====================================
-   結果計算
-==================================== */
+/* ============================================================
+   スコア計算
+   各習い事のタグと選択肢のadd/subタグをマッチング
+   add一致: +10点 / sub一致: -5点
+   全7問を積み上げた合計スコアでTop5を決定
+============================================================ */
 function showResult() {
   if (answers[currentQ] === null) return;
 
-  // スコアを集計
-  const catScore = {};
-  categories.forEach(cat => catScore[cat.name] = 0);
-
-  answers.forEach((ansIdx, qIdx) => {
-    if (ansIdx === null) return;
-    const tags = questions[qIdx].options[ansIdx].tags;
-    tags.forEach(tag => {
-      const cats = tagToCategory[tag] || [];
-      cats.forEach(c => { if (catScore[c] !== undefined) catScore[c] += 3; });
-      // 完全一致でなくても部分一致でスコア加算
-      categories.forEach(cat => {
-        if (cat.name.includes(tag) || tag.includes('スポーツ') && cat.name.includes('スポーツ')) {
-          catScore[cat.name] = (catScore[cat.name] || 0) + 1;
-        }
-      });
+  const scored = hobbies.map(hobby => {
+    let score = 0;
+    answers.forEach((ai, qi) => {
+      const opt = questions[qi].options[ai];
+      opt.add.forEach(tag => { if (hobby.tags.includes(tag)) score += 10; });
+      opt.sub.forEach(tag => { if (hobby.tags.includes(tag)) score -= 5;  });
     });
-  });
+    return {hobby, score};
+  }).sort((a, b) => b.score - a.score);
 
-  // スコアが高いカテゴリ順に習い事を5つ選出
-  const sortedCats = Object.entries(catScore).sort((a, b) => b[1] - a[1]);
-  const top5 = [];
-  const usedCats = new Set();
-  sortedCats.forEach(([catName, score]) => {
-    if (top5.length >= 5) return;
-    const cat = categories.find(c => c.name === catName);
-    if (!cat) return;
-    // そのカテゴリから1つ選ぶ（先頭）
-    const hobby = cat.hobbies[Math.floor(Math.random() * Math.min(3, cat.hobbies.length))];
-    top5.push({ hobby, catName, cat, score });
-  });
+  const maxScore = Math.max(scored[0].score, 1);
+  const top5 = scored.slice(0, 5);
+  const rankLabel = ["🥇","🥈","🥉","4位","5位"];
 
-  // 足りない場合は補完
-  if (top5.length < 5) {
-    categories.forEach(cat => {
-      if (top5.length >= 5) return;
-      if (top5.some(r => r.catName === cat.name)) return;
-      top5.push({ hobby: cat.hobbies[0], catName: cat.name, cat, score: 0 });
-    });
-  }
-
-  const reasons = [
-    "あなたの答えから、このジャンルがとても合いそうです！",
-    "あなたの好きなことと、この習い事はぴったりです！",
-    "あなたのめざす姿に近い習い事です！ぜひためしてみて！",
-    "楽しみながらつづけられそうな習い事です！",
-    "少し意外かもしれないけど、きっとはまるはず！"
-  ];
-
-  const rankEmojis = ["🥇", "🥈", "🥉", "4️⃣", "5️⃣"];
-
-  const list = document.getElementById('result-list');
-  list.innerHTML = top5.slice(0, 5).map((r, i) => `
+  document.getElementById('result-list').innerHTML = top5.map((r, i) => {
+    const pct = Math.max(12, Math.round(r.score / maxScore * 100));
+    return `
     <div class="result-card">
-      <div class="rank-badge">${rankEmojis[i]}</div>
+      <div class="rank-badge">${rankLabel[i]}</div>
       <div class="result-info">
-        <div class="result-hobby">${r.hobby}</div>
-        <div style="font-size:12px;color:#aaa;margin-top:2px;">${r.catName}</div>
-        <div class="result-reason">${reasons[i]}</div>
+        <div class="result-hobby">${r.hobby.emoji} ${r.hobby.name}</div>
+        <div class="result-cat">${r.hobby.cat}</div>
+        <div class="result-reason">${buildReason(r.hobby, answers)}</div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:${pct}%"></div></div>
       </div>
-      <div class="result-emoji">${getEmoji(r.catName)}</div>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
 
   showSection('sec-result');
 }
 
-function getEmoji(catName) {
-  if (catName.includes('スポーツ（チーム）')) return '⚽';
-  if (catName.includes('スポーツ')) return '🏃';
-  if (catName.includes('音楽')) return '🎵';
-  if (catName.includes('ダンス')) return '💃';
-  if (catName.includes('アート')) return '🎨';
-  if (catName.includes('学習')) return '📚';
-  if (catName.includes('自然')) return '🌿';
-  if (catName.includes('こころ')) return '🧘';
-  if (catName.includes('文化')) return '🎭';
-  if (catName.includes('先進')) return '🚀';
-  return '⭐';
-}
-
-/* ====================================
-   初期化
-==================================== */
+/* 初期化 */
 buildHobbyList();
 </script>
 </body>
